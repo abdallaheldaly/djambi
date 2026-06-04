@@ -49,18 +49,19 @@ class Preferences with ChangeNotifier {
     return res;
   }
 
+  void _notifyListeners(bool _) => notifyListeners();
+
   // --------------
   // game settings
   // --------------
 
   // notation visibility
-  Future<void> setNotationVisibility(int visibility) =>
-      _prefs.setInt(_notationVisibility.key, visibility).then((_) => notifyListeners());
+  Future<void> setNotationVisibility(int value) => _prefs.setInt(_notationVisibility.key, value).then(_notifyListeners);
   int get notationVisibilityIndex => _prefs.getInt(_notationVisibility.key) ?? _notationVisibility.val.index;
   NotationVisibility get notationVisibility => .values[notationVisibilityIndex];
 
   // game speed
-  Future<void> setGameSpeed(int gameSpeed) => _prefs.setInt(_gameSpeed.key, gameSpeed).then((_) => notifyListeners());
+  Future<void> setGameSpeed(int value) => _prefs.setInt(_gameSpeed.key, value).then(_notifyListeners);
   int get gameSpeedIndex => _prefs.getInt(_gameSpeed.key) ?? _gameSpeed.val.index;
   GameSpeed get gameSpeed => .values[gameSpeedIndex];
 
@@ -73,14 +74,12 @@ class Preferences with ChangeNotifier {
   // --------------
 
   // turn direction
-  Future<void> setTurnDirection(int direction) =>
-      _prefs.setInt(_turnDirection.key, direction).then((_) => notifyListeners());
+  Future<void> setTurnDirection(int value) => _prefs.setInt(_turnDirection.key, value).then(_notifyListeners);
   int get turnDirectionIndex => _prefs.getInt(_turnDirection.key) ?? _turnDirection.val.index;
   TurnDirection get turnDirection => .values[turnDirectionIndex];
 
   // start ideology
-  Future<void> setStartIdeology(int ideology) =>
-      _prefs.setInt(_startIdeology.key, ideology).then((_) => notifyListeners());
+  Future<void> setStartIdeology(int value) => _prefs.setInt(_startIdeology.key, value).then(_notifyListeners);
   int get startIdeologyIndex => _prefs.getInt(_startIdeology.key) ?? _startIdeology.val.index;
   Ideology get startIdeology => .values[startIdeologyIndex];
 
@@ -88,7 +87,7 @@ class Preferences with ChangeNotifier {
   Future<void> togglePlayerType(int index) {
     final players = playerTypes.toList();
     players[index] = players[index].isHuman ? .aiMaxN : .human;
-    return _prefs.setString(_playerTypes.key, players.map((e) => e.index).join(",")).then((_) => notifyListeners());
+    return _prefs.setString(_playerTypes.key, players.map((e) => e.index).join(",")).then(_notifyListeners);
   }
 
   Iterable<int> get playerTypeIndexes =>

@@ -9,11 +9,11 @@ Future<void> main() async {
   // debugPaintSizeEnabled = true;
   WidgetsFlutterBinding.ensureInitialized();
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
-  runApp(MyApp(preferences: await .create()));
+  runApp(MyApp(await .create()));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key, required this.preferences});
+  const MyApp(this.preferences, {super.key});
 
   final Preferences preferences;
 
