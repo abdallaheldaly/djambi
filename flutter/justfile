@@ -2,10 +2,6 @@ set shell := ["bash", "-uc"]
 
 symbols_path := "build/app/intermediates/merged_native_libs/release/mergeReleaseNativeLibs/out/lib"
 
-# Show a list of available recipes
-help:
-    @just --list
-
 # Clean build artifacts
 clean:
     flutter clean
@@ -26,11 +22,3 @@ build-android-release:
 create-debug-symbols:
     cd {{symbols_path}} && zip -r symbols.zip .
     mv {{symbols_path}}/symbols.zip .
-
-# Create initial project state
-create-init-state:
-    flutter create \
-      --org com.datonomi \
-      --project-name djambi \
-      --description "An implementation of Djambi board game." \
-      flutter
