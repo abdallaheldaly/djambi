@@ -25,6 +25,7 @@ enum GameSpeed {
 // game settings
 const _notationVisibility = (key: "notation-visibility", val: NotationVisibility.topLeft);
 const _gameSpeed = (key: "game-speed", val: GameSpeed.medium);
+const _soundEnabled = (key: "sound-enabled", val: true);
 
 // play options
 const _turnDirection = (key: "turn-direction", val: TurnDirection.anticlockwise);
@@ -64,6 +65,10 @@ class Preferences with ChangeNotifier {
   Future<void> setGameSpeed(int value) => _prefs.setInt(_gameSpeed.key, value).then(_notifyListeners);
   int get gameSpeedIndex => _prefs.getInt(_gameSpeed.key) ?? _gameSpeed.val.index;
   GameSpeed get gameSpeed => .values[gameSpeedIndex];
+
+  // sound effects
+  Future<void> setSoundEnabled(bool value) => _prefs.setBool(_soundEnabled.key, value).then(_notifyListeners);
+  bool get soundEnabled => _prefs.getBool(_soundEnabled.key) ?? _soundEnabled.val;
 
   // theme
   PieceTheme get pieceTheme => .classic;

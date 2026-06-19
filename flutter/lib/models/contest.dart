@@ -6,6 +6,7 @@ import 'ai/difficulty.dart';
 import 'ai/tree.dart';
 import 'cell.dart';
 import 'enums.dart';
+import 'events.dart';
 import 'member.dart';
 import 'parliament.dart';
 import 'state.dart';
@@ -18,6 +19,7 @@ class Contest {
 
   Parliament get parliament => _curState.parliament;
   List<Cell> get lastMovedCells => _curState.lastMovedCells;
+  List<GameEvent> get lastEvents => _curState.events;
   bool get canUndo => _undoStack.isNotEmpty;
   bool get canRedo => _redoStack.isNotEmpty;
 
