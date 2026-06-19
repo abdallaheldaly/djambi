@@ -31,7 +31,7 @@ const _turnDirection = (key: "turn-direction", val: TurnDirection.anticlockwise)
 const _startIdeology = (key: "start-ideology", val: Ideology.red);
 const _playerTypes = (
   key: "player-types",
-  val: [PlayerType.human, PlayerType.aiMaxN, PlayerType.aiMaxN, PlayerType.aiMaxN],
+  val: [PlayerType.human, PlayerType.aiMedium, PlayerType.aiMedium, PlayerType.aiMedium],
 );
 
 // ------------------------------------
@@ -86,9 +86,22 @@ class Preferences with ChangeNotifier {
   // player types
   Future<void> togglePlayerType(int index) {
     final players = playerTypes.toList();
-    players[index] = players[index].isHuman ? .aiMaxN : .human;
-    return _prefs.setString(_playerTypes.key, players.map((e) => e.index).join(",")).then(_notifyListeners);
+    players[index] = players[index].isHuman ? .aiMedium : .human;
+    return _setPlayerTypes(players);
   }
+
+  /// Sets the AI difficulty for a non-human player slot. Has no effect on
+  /// whether the slot is human or AI - use [togglePlayerType] for that.
+  Future<void> setPlayerDifficulty(int index, PlayerType difficulty) {
+    assert(difficulty.isAi, "difficulty must be one of the AI player types");
+    final players = playerTypes.toList();
+    if (players[index].isHuman) return Future.value();
+    players[index] = difficulty;
+    return _setPlayerTypes(players);
+  }
+
+  Future<void> _setPlayerTypes(List<PlayerType> players) =>
+      _prefs.setString(_playerTypes.key, players.map((e) => e.index).join(",")).then(_notifyListeners);
 
   Iterable<int> get playerTypeIndexes =>
       _prefs.getString(_playerTypes.key)?.split(",").map(int.parse) ?? _playerTypes.val.map((e) => e.index);

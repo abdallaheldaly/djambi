@@ -15,8 +15,6 @@ const noTapUpOverlayId = "noTapUpOverlay";
 const _gameWidth = 1000.0;
 const _gameHeight = 1380.0;
 
-const _aiMaxDepth = 2;
-
 /// used for developing and testing
 const _saveLoadState = false;
 const _statePath = "game.json";
@@ -104,7 +102,7 @@ class DjambiGame extends FlameGame {
       return;
     }
     _allowUndoRedo = false;
-    Timer(preferences.gameSpeed.duration, () => _contest.aiAct(_aiMaxDepth));
+    Timer(preferences.gameSpeed.duration, () => _contest.aiAct());
   }
 
   Future<void> _showGameOverDialog(String title, [String? message]) => showDialog(
